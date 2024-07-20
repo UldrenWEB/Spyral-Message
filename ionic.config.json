@@ -1,0 +1,7 @@
+{
+  "name": "Spyral Message",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
