@@ -7,7 +7,12 @@
             <h5>{{name}}</h5>
         </div>
         <div class="cont-icon">
-            <ion-icon name="create-outline"></ion-icon>
+            <ng-container *ngIf="isCheckbox; else iconTemplate">
+                <ion-checkbox [checked]="selected"></ion-checkbox>
+            </ng-container>
+            <ng-template #iconTemplate>
+                <ion-icon name="create-outline"></ion-icon>
+            </ng-template>
         </div>
     </div>
 </div>

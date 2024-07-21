@@ -23,6 +23,11 @@
   </div>
 
   <div class="cont-contacts">
-    <app-contact [name]="'Uldren Gedde'"></app-contact>
+    <div *ngFor="let contact of filteredContacts">
+      <app-contact
+          [name]="contact.name"
+          [id]="contact.id">
+      </app-contact>
+  </div>
   </div>
 </div>

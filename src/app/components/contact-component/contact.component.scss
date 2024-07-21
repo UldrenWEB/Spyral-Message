@@ -13,7 +13,7 @@
     border-radius: 10000px 9px 9px 10000px;
     border: 1px solid rgba(255, 255, 255, 0.233);
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     gap: 1em;
     padding-left: 0em;
@@ -29,6 +29,9 @@ h5{
     font-family: $font-primary;
     margin-left: 1em;
     margin-right: 1em;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    text-align: center;
 }
 
 
@@ -54,4 +57,10 @@ h5{
 
 ion-icon{
     font-size: 30px;
+}
+ion-checkbox{
+    --border-radius: 999px;
+    --size: 25px;
+    --checkbox-background-checked: #FF00B8;
+    --border-color-checked: #FF00B8;
 }

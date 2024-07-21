@@ -32,9 +32,20 @@
     }
 }
 
+.cont-contacts{
+    margin-top: 2em;
+    height: auto;
+    max-height: 56%;
+    overflow-y: scroll;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+
 .cont-input{
-    margin-top: 0em;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
 h1{

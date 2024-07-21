@@ -1,3 +1,18 @@
 <div class="container">
-    Hola desde new chat
+    <div class="header">
+        <button (click)="previusView()" class="btn-header">Cancel</button>
+        <h1>New Chat</h1>
+        <!-- <button class="btn-header">Listo</button> -->
+    </div>
+    <div class="cont-input">
+        <ion-searchbar (ionInput)="onChange($event)" placeholder="Search"></ion-searchbar>
+    </div>
+    <div class="cont-contacts">
+        <div *ngFor="let contact of filteredContacts">
+            <app-contact
+                [name]="contact.name"
+                [id]="contact.id">
+            </app-contact>
+        </div>
+    </div>
 </div>

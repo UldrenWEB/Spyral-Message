@@ -1,3 +1,21 @@
 <div class="container">
-    Hola bebe, desde el buscar amigo
+    <div class="header">
+        <button (click)="previusView()" class="btn-header">Cancel</button>
+        <h1>Add Friends</h1>
+        <button (click)="getSelectedContacts()" class="btn-header">Listo</button>
+    </div>
+    <div class="cont-input">
+        <ion-searchbar (ionInput)="onChange($event)" placeholder="Search"></ion-searchbar>
+    </div>
+    <div class="cont-contacts">
+        <div *ngFor="let contact of filteredContacts">
+            <app-contact
+                [name]="contact.name"
+                [id]="contact.id"
+                [isCheckbox]="true"
+                [selectedIds]="selectedContacts"
+                (contactSelected)="onContactSelected($event)">
+            </app-contact>
+        </div>
+    </div>
 </div>
