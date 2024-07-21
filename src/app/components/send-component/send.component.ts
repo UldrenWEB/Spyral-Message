@@ -33,6 +33,7 @@ export class SendComponent {
             this.message = '';
             this.selectedImage = null;
             this.selectedImageBlob = null;
+            this.isSelectImage = false;
         }
     }
     

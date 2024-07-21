@@ -1,0 +1,56 @@
+@import '../../../theme/variables.scss';
+
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.message-item {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.message-item-sender {
+    align-self: flex-end;
+    background-color:palegreen;
+}
+
+.message-item-receiver {
+    width: 80%;
+    align-self: flex-start;
+    text-align: left;
+    background-color: peachpuff;
+}
+
+.message-header {
+    font-size: 0.8em;
+    color: #FF00B8;
+}
+
+.message-body {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    color: black;
+}
+
+.message-image img {
+    max-width: 90%;
+    border-radius: 10px;
+}
+
+.message-text {
+    margin-top: 5px;
+}
+
+.message-footer {
+    font-size: 0.7em;
+    color: #999;
+    margin-top: 5px;
+    text-align: right;
+}

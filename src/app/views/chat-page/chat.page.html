@@ -1,6 +1,23 @@
 <div class="container">
+    <div class="header">
+        <div>
+            <ion-icon (click)="backPage()" name="arrow-back-outline"></ion-icon>
+        </div>
+        <h1>{{nameMessage ? nameMessage : 'Direct Message'}}</h1>
+        <div>
+            <ion-icon name="settings-outline"></ion-icon>
+        </div>
+    </div>
     <div class="cont-messages">
-        
+        <div class="cont-items" *ngFor="let message of messages">
+            <app-message-item
+                [id]="message._id"
+                [userEmitter]="message.user"
+                [multimedia]="message.multimedia"
+                [description]="message.description"
+                [timestamp]="message.createdAt">
+            </app-message-item>
+        </div>
     </div>
     <app-send (sendMessage)="handleSendMessage($event)"></app-send>
 </div>

@@ -15,7 +15,7 @@ export class ChatComponent{
 
     constructor(
         private router: Router,
-        private messageService: MessageService
+        private messageService: MessageService,
     ){}
 
     @Input() id: string = '';
@@ -31,15 +31,17 @@ export class ChatComponent{
     @Input() isGroup: boolean = false;
     @Input() notViews: number = 0;
     @Input() messages: Array<any> = [
-        {_id: 'fasdlasdk', user: 'idUser', multimedia: {url: 'https://adlk', type: 'audio', description: 'Este es un nuevo mensaje'}},
-        {_id: 'fasdlasdk', user: 'idUser', multimedia: {url: 'https://adlk', type: 'audio', description: 'Hola'}},
-        {_id: 'fasdlasdk', user: 'idUser', multimedia: {url: 'https://adlk', type: 'audio', description: 'Como estas'}},
-        {_id: 'fasdlasdk', user: 'idUser', multimedia: {url: 'https://adlk', type: 'audio', description: 'Ya no te veo desde hace rato'}},
-        {_id: 'fasdlasdk', user: 'idUser', multimedia: {url: 'https://adlk', type: 'audio', description: 'Como te sientes'}}
+        { _id: 'fasdlasdk', user: { id: 'idLKADFLA', name: 'Uldren Gedde' }, multimedia: { url: 'https://unavatar.io/erikatourt', type: 'image' }, description: 'Este es un nuevo mensaje', createdAt: new Date().toISOString() },
+        { _id: 'fasdlasdk', user: { id: '12348923e', name: 'Gabriela Gedde' }, multimedia: { url: 'https://adlk', type: 'audio' }, description: 'Hola', createdAt: new Date(Date.now() - 60000).toISOString() }, // Hace 1 minuto
+        { _id: 'fasdlasdk', user: { id: 'dfaklsdje', name: 'Erika Tourt' }, multimedia: { url: 'https://adlk', type: 'audio' }, description: 'Como estas', createdAt: new Date(Date.now() - 120000).toISOString() }, // Hace 2 minutos
+        { _id: 'fasdlasdk', user: { id: 'fadkjj23', name: 'Enmanuel Colina' }, multimedia: { url: 'https://adlk', type: 'audio' }, description: 'Ya no te veo desde hace rato', createdAt: new Date(Date.now() - 180000).toISOString() }, // Hace 3 minutos
+        { _id: 'fasdlasdk', user: { id: '2348239', name: 'Iliana Gedde' }, multimedia: { url: 'https://adlk', type: 'audio' }, description: 'Como te sientes', createdAt: new Date(Date.now() - 240000).toISOString() }, // Hace 4 minutos
+        { _id: 'fasdlasdk', user: { id: '28349287394823', name: 'Iliana Gedde' }, multimedia: { url: 'https://adlk', type: 'audio' }, description: 'Como te sientes', createdAt: new Date(Date.now() - 240000).toISOString() } // Hace 4 minutos
     ];
 
     redirectToChat = () => {
         this.messageService.setMessage(this.messages);
+        this.messageService.setName(this.name);
         this.router.navigate(['/chat-page'])
     }
 

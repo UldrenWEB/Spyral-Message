@@ -1,3 +1,16 @@
-<div class="container">
-    Hola desde el item message
+<div class="container" [style]="isCurrentUser() ? 'justify-content: flex-end;': 'justify-content: flex-start;'">
+    <div [ngClass]="{'message-item': true, 'message-item-sender': isCurrentUser(), 'message-item-receiver': !isCurrentUser()}">
+        <div class="message-header">
+            <span>{{ isCurrentUser() ? 'Tú' : userEmitter.name }}</span>
+        </div>
+        <div class="message-body">
+            <div *ngIf="multimedia && multimedia.type === 'image'" class="message-image">
+                <img [src]="multimedia.url" alt="Image">
+            </div>
+            <div class="message-text">{{ description }}</div>
+        </div>
+        <div class="message-footer">
+            <span>{{ formatTimestamp(timestamp) }}</span>
+        </div>
+    </div>
 </div>

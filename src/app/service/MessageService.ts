@@ -6,10 +6,19 @@ import { Injectable } from "@angular/core";
 })
 export class MessageService {
     private messages: Array<any> = [];
+    private name: string | null = null;
 
 
     setMessage = (messages: Array<any>) => {
         this.messages = messages
+    }
+
+    setName = (name: string | null) => {
+        this.name = name;
+    }
+
+    getName = () => {
+        return this.name;
     }
 
     getMessages = () =>{

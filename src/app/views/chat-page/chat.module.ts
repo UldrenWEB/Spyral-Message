@@ -7,6 +7,7 @@ import { ChatPage } from './chat.page';
 import { ChatPageRoutingModule } from './chat-routing.module';
 import { ChatComponent } from 'src/app/components/chat-component/chat.component';
 import { SendComponent } from 'src/app/components/send-component/send.component';
+import { MessageItemComponent } from 'src/app/components/message-item/message.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SendComponent } from 'src/app/components/send-component/send.component'
     FormsModule,
     ChatPageRoutingModule,
     ChatComponent,
-    SendComponent
+    SendComponent,
+    MessageItemComponent
   ],
   declarations: [ChatPage]
 })
