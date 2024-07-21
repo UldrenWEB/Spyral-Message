@@ -1,6 +1,6 @@
 <div class="container">
     <div (click)="redirectToChat()" class="subcontainer">
-        <h3>{{name}}</h3>
+        <h3>{{name ? name : 'Direct Message'}}</h3>
         <p>{{getFormattedUsers(users, 40)}}</p>
         <div *ngIf="notViews !== 0" class="cont-noViews">
             <span class="noViews">{{notViews}}</span>

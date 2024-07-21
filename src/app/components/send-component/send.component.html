@@ -1,0 +1,13 @@
+<div class="send-container">
+    <div *ngIf="isSelectImage" class="selected-image">
+        <img [src]="selectedImage" alt="Selected Image" />
+        <ion-icon name="close-circle-outline" (click)="isSelectImage = false"></ion-icon>
+    </div>
+    <div class="input-container">
+        <ion-icon name="mic-outline"></ion-icon>
+        <input type="text" (input)="onMessageInput($event)" placeholder="Type a message..." [value]="message">
+        <ion-icon name="camera-outline" (click)="fileInput.click()"></ion-icon>
+        <input type="file" accept="image/*" (change)="onImageSelected($event)" #fileInput hidden>
+        <ion-icon name="send-outline" (click)="onSend()"></ion-icon>
+    </div>
+</div>
