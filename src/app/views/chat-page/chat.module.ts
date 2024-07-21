@@ -2,9 +2,9 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HomePage } from './home.page';
+import { ChatPage } from './chat.page';
 
-import { HomePageRoutingModule } from './home-routing.module';
+import { ChatPageRoutingModule } from './chat-routing.module';
 import { ChatComponent } from 'src/app/components/chat-component/chat.component';
 
 @NgModule({
@@ -12,9 +12,9 @@ import { ChatComponent } from 'src/app/components/chat-component/chat.component'
     IonicModule,
     CommonModule,
     FormsModule,
-    HomePageRoutingModule,
+    ChatPageRoutingModule,
     ChatComponent
   ],
-  declarations: [HomePage]
+  declarations: [ChatPage]
 })
 export class HomePageModule {}

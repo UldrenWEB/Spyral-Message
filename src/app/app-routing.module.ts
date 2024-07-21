@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./views/register-page/register.module').then(m=>m.RegisterPageModule)
   },
   {
+    path: 'chat-page',
+    loadChildren: () => import('./views/chat-page/chat.module').then(m=>m.HomePageModule)
+  },
+  {
     path: '',
     loadChildren: () => import('./views/tabs/tabs.module').then(m => m.TabsPageModule)
   }

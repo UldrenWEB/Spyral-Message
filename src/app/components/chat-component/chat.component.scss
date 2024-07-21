@@ -1,0 +1,71 @@
+@import '../../../theme/variables.scss';
+
+.container {
+    width: 100%;
+    height: 6em;
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
+.subcontainer {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    border-radius: 15px;
+    align-items: start;
+    flex-direction: column;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    padding-left: 1em;
+    position: relative; 
+    box-shadow: 0 4px 8px rgba(206, 197, 197, 0.1), 
+                0 6px 20px rgba(255, 255, 255, 0.1);
+    transition: box-shadow 0.1s ease-in-out;
+
+    &:active {
+        box-shadow: 0 2px 4px rgba(255, 255, 255, 0.4), 
+                    0 4px 12px rgba(255, 255, 255, 0.4);
+    }
+}
+
+.header-radius{
+    overflow:hidden;
+    border-radius: 0px 0px 20px 20px;
+    z-index: 9999999;
+}
+
+.cont-noViews {
+    position: absolute;
+    right: 1em;
+    top: 0.6em;
+    color: $color-primary;
+    font-family: $font-primary;
+    font-weight: bold;
+    padding: 0.5em;
+    padding-left: 0.9em;
+    padding-right: 0.9em;
+    background-color: rgba(255, 255, 255, 0.178);
+    border-radius: 99px;
+}
+
+h3 {
+    font-family: $font-new;
+    color: $color-primary;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 0.6em;
+}
+
+p {
+    font-family: $font-new;
+    color: white;
+    margin: 0;
+}
+
+ion-content{
+    padding-bottom: 10em;
+    margin-bottom: 3em;
+}
+
