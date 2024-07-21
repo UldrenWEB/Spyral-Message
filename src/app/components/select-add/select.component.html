@@ -1,11 +1,28 @@
-<ion-header>
-    <ion-toolbar>
-      <ion-title>Pantalla 1</ion-title>
-      <ion-button expand="block" (click)="nextScreen()">Cancel</ion-button>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding screen-container">
-    <ion-searchbar placeholder="Search"></ion-searchbar>
-    <div class="block">Block of Content</div>
-    
-</ion-content>
+<div class="container">
+  <div class="cont-input">
+    <ion-searchbar (ionInput)="onChange($event)" placeholder="Search"></ion-searchbar>
+  </div>
+  <div (click)="nextScreen(2)">
+    <app-card
+      description="Create group"
+      [icon]="'group'"
+    ></app-card>
+  </div>
+  <div (click)="nextScreen(3)">
+    <app-card
+      description="New chat"
+      [icon]="'chat'"
+    ></app-card>
+  </div>
+
+  <div (click)="nextScreen(4)">
+    <app-card
+      description="Add Friend"
+      [icon]="'friend'"
+    ></app-card>
+  </div>
+
+  <div class="cont-contacts">
+    <app-contact [name]="'Uldren Gedde'"></app-contact>
+  </div>
+</div>

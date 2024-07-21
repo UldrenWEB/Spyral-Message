@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, Type } from '@angular/core';
 import { SelectAddScreenComponent} from '../select-add/select.component';
 import { GroupScreenComponent } from '../group-component/group.component';
+import { SearchComponent } from '../search-newChat-component/search.component';
+import { SearchFriendComponent } from '../search-addFriend-component/search.component';
 
 @Component({
   selector: 'app-modal-content',
@@ -16,7 +18,7 @@ export class ModalContentComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.loadScreen(SelectAddScreenComponent, 'slide-in-left'); // Load Screen 1 initially
+    this.loadScreen(SelectAddScreenComponent, 'slide-in-left');
   }
 
   loadScreen(component: Type<any>, animation: string) {
@@ -39,6 +41,10 @@ export class ModalContentComponent implements OnInit {
         this.loadScreen(SelectAddScreenComponent, 'slide-in-right');
       } else if (nextScreen === 2) {
         this.loadScreen(GroupScreenComponent, 'slide-in-left');
+      } else if(nextScreen === 3){
+        this.loadScreen(SearchComponent, 'slide-in-left');
+      } else if (nextScreen === 4){
+        this.loadScreen(SearchFriendComponent, 'slide-in-left');
       }
     });
   }
