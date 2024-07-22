@@ -1,7 +1,7 @@
 <div class="send-container">
     <div *ngIf="isSelectImage" class="selected-image">
         <img [src]="selectedImage" alt="Selected Image" />
-        <ion-icon name="close-circle-outline" (click)="isSelectImage = false"></ion-icon>
+        <ion-icon name="close-circle-outline" (click)="close()"></ion-icon>
     </div>
     <div class="input-container">
         <ion-icon name="mic-outline"></ion-icon>

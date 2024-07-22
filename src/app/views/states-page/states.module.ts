@@ -5,13 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { StatesPage } from './states.page';
 
 import { StatesPageRoutingModule } from './states-routing.module';
+import { StateComponent } from 'src/app/components/state-component/state.component';
+import { CarouselComponent } from 'src/app/components/carousel-component/carousel.component';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    StatesPageRoutingModule
+    StatesPageRoutingModule,
+    StateComponent,
+    CarouselComponent
   ],
   declarations: [StatesPage]
 })

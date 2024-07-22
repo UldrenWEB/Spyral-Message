@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Output } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Output } from "@angular/core";
 import { SafeResourceUrl } from "@angular/platform-browser";
 import { IonicModule } from "@ionic/angular";
 
@@ -18,6 +18,7 @@ export class SendComponent {
 
 
     constructor(
+        private cdr : ChangeDetectorRef
     ){}
 
 
@@ -35,6 +36,13 @@ export class SendComponent {
             this.selectedImageBlob = null;
             this.isSelectImage = false;
         }
+    }
+
+    close(){
+        this.message = '';
+        this.selectedImage = 'PRDDDDD';
+        this.selectedImageBlob = null;
+        this.isSelectImage = false;
     }
     
     onImageSelected(event: Event): void {
