@@ -6,18 +6,9 @@
         <div class="cont-name">
             <h5>{{'Uldren Gedde'}}</h5>
         </div>
-        <div id="open-modal" class="cont-icon">
+        <div class="cont-icon">
             <ion-icon name="rocket-outline"></ion-icon>
         </div>
     </div>
 </div>
 
-<ion-content>
-    <ion-modal trigger="open-modal" [initialBreakpoint]="0.57" [breakpoints]="[0, 5]">
-      <ng-template>
-                <div class="modal-container">
-                    <app-carousel [items]="items"></app-carousel>                  
-                </div>
-      </ng-template>
-    </ion-modal>
-</ion-content>

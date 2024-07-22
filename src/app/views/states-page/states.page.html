@@ -1,6 +1,21 @@
 <div class="container">
-  <app-state></app-state>
-
+  <div *ngFor="let item of items;">
+    <app-state id="open-modal-{{item.id}}"></app-state>
+  </div>
 </div>
 
+
+<ion-content>
+  <div *ngFor="let item of items;">
+    <ion-modal trigger="open-modal-{{item.id}}" [initialBreakpoint]="0.57" [breakpoints]="[0, 5]">
+      <ng-template>
+                <div class="modal-container">
+                    <app-carousel [items]="items"></app-carousel>                  
+                </div>
+      </ng-template>
+    </ion-modal>
+  </div>
+</ion-content>
+
+//TENGO QUE CAMBIAR EL APP-STATE PARA QUE PASE EL NOMBRE DEL USER E ITERAR PARA TENER EL ITEMS LLENO DE INFORMACION
 
