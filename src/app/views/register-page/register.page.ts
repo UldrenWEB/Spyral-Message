@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Keyboard } from "@capacitor/keyboard";
 import { Platform } from "@ionic/angular";
 import { CallService } from "src/app/service/CallService";
+import { RegisterService } from "src/app/service/RegisterService";
 
 @Component({
     selector: 'app-register',
@@ -14,7 +15,8 @@ export class RegisterPage implements OnInit{
     constructor(
       private router: Router,
       private platform: Platform,
-      private callService: CallService
+      private callService: CallService,
+      private registerService: RegisterService
     ){}
     
     ngOnInit(): void {
@@ -105,24 +107,25 @@ export class RegisterPage implements OnInit{
       
       //Si todo fue se manda el mensaje de registro exitoso
       //Luego se redirije al login para que ingrese sus datos
-      const result = await this.callService.call({
-      method: 'post',
-      isToken: false,
-      endPoint: 'register',
-      body: {
-        username: this.usernameValue,
-        email: this.emailValue,
-        password: this.passwordValue,
-      }
-      })
-        this.#showMessageBar(result.message['description'], result.message['code']);
-        if(result.message['code'] == 1 || result.message['code'] == 2){
-        return;
-      }
+      // const result = await this.callService.call({
+      // method: 'post',
+      // isToken: false,
+      // endPoint: 'register',
+      // body: {
+      //   username: this.usernameValue,
+      //   email: this.emailValue,
+      //   password: this.passwordValue,
+      // }
+      // })
+      //   this.#showMessageBar(result.message['description'], result.message['code']);
+      //   if(result.message['code'] == 1 || result.message['code'] == 2){
+      //   return;
+      // }
 
       this.resetProps();
+      //Aqui se debe usar el registerService para pasar a la otra vista
       setTimeout(() => {
-        this.router.navigate(['/login'])
+        this.router.navigate(['/register-image'])
       }, 500)
       return;
     }

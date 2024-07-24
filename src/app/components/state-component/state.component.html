@@ -4,10 +4,10 @@
             <img [src]="imageUser" alt="ImagenContacto">
         </div>
         <div class="cont-name">
-            <h5>{{'Uldren Gedde'}}</h5>
+            <h5>{{nameUser}}</h5>
         </div>
         <div class="cont-icon">
-            <ion-icon name="rocket-outline"></ion-icon>
+            <ion-icon (click)="openModal()" name="rocket-outline"></ion-icon>
         </div>
     </div>
 </div>

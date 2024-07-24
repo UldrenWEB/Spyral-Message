@@ -9,7 +9,7 @@
                 class="dsc-carousel__content-item" 
                 [ngStyle]="{'background-image':'url('+section.image+')', 'margin-left':section.marginLeft + '%'}"
             >
-                <h1>{{section.title?.first}}<span>{{section.title?.second}}</span></h1>
+                <h1>{{section.title?.first ? section.title?.first : '' }}<span>{{section.title?.second ? section.title?.second : ''}}</span></h1>
                 <p>{{section.subtitle}}</p>
             </div>
         </ng-container>

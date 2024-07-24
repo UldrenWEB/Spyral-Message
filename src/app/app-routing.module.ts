@@ -24,8 +24,16 @@ const routes: Routes = [
     loadChildren: () => import('./views/register-page/register.module').then(m=>m.RegisterPageModule)
   },
   {
+    path: 'register-image',
+    loadChildren: () => import('./views/register-image-page/register.module').then(m=>m.RequestPageModule)
+  },
+  {
     path: 'chat-page',
     loadChildren: () => import('./views/chat-page/chat.module').then(m=>m.HomePageModule)
+  },
+  {
+    path: 'create-state',
+    loadChildren: () => import('./views/create-state-page/create.module').then(c=>c.HomePageModule)
   },
   {
     path: '',

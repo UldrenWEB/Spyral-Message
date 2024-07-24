@@ -1,16 +1,19 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { ICarouselItem } from "../components/carousel-component/icarousel-item.metadata";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class StateService {
-    private arrayImages: Array<{image: string, description: string}> = [];
+  private itemsSubject = new BehaviorSubject<ICarouselItem[]>([]);
+  items$ = this.itemsSubject.asObservable();
 
-    setArrayImages(images: Array<{image: string, description: string}>){
-        this.arrayImages = images;
-    }
+  setItems(items: ICarouselItem[]) {
+    this.itemsSubject.next(items);
+  }
 
-    getArrayImage(){
-        return this.arrayImages;
-    }
+  getItems() {
+    return this.itemsSubject.value;
+  }
 }

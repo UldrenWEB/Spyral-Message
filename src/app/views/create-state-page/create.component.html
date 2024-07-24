@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="header">
+        <button (click)="backView()" class="btn-header">Cancel</button>
+        <h1>Upload State</h1>
+        <button (click)="onClick()" class="btn-header">Upload</button>
+    </div>
+
+    <app-input-component
+        [label]="'Description'"
+        fill="outline"
+        labelPlacement="floating"
+        [counter]="true"
+        [maxlength]="40"
+        [(value)]="descriptionValue"
+        helperText="Enter your description"
+        errorText="Invalid description"
+        colorText="#FF00B8"
+        (valueChange)="onValueChangeDescription($event)"
+        [regexPattern]="regexDescription"
+    ></app-input-component>
+
+    <div class="cont-image-picker">
+        <div (click)="openImagePicker()" class="image-picker">
+            <h2 *ngIf="!selectImage">Select a cool image</h2>
+            <img *ngIf="selectImage" [src]="srcImage" alt="Artist Image">
+        </div>
+    </div>
+</div>

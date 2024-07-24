@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('../states-page/states.module').then(m => m.StatesPageModule)
       },
       {
+        path:'request',
+        loadChildren: () => import('../request-page/request.module').then(m=>m.RequestPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

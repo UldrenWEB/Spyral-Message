@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ICarouselItem } from 'src/app/components/carousel-component/icarousel-item.metadata';
 import { CAROUSEL_DATA_ITEMS } from 'src/app/components/state-component/carousel.const';
+import { CAROUSEL_DATA_ITEMS as bebe } from 'src/app/components/state-component/carousel2.const';
+import { StateService } from 'src/app/service/StateService';
 
 @Component({
   selector: 'app-states',
@@ -9,12 +13,18 @@ import { CAROUSEL_DATA_ITEMS } from 'src/app/components/state-component/carousel
 })
 export class StatesPage implements OnInit {
   items: ICarouselItem[] = CAROUSEL_DATA_ITEMS;
+  items2: ICarouselItem[] = bebe;
   states: Array<{_id: string, user: {_id: string, username: string}, multimedia: Array<{url: string, type: 'image'}>, description: string}> = [];
-
-  constructor() {}
+  items$: Observable<ICarouselItem[]> = new Observable<ICarouselItem[]>();
+  
+  constructor(
+    private stateService: StateService,
+    private router: Router
+  ) {}
 
   //Aqui hara la consulta a los estados cada que cargue el componente
   ngOnInit(): void {
+    this.items$ = this.stateService.items$;
     this.states = [
       {_id: 'fdsalkfjal', user: {
         _id: 'fadfajlksdal',
@@ -60,9 +70,8 @@ export class StatesPage implements OnInit {
     ]
   }
 
-  openModal(id: string) {
-    const modalTrigger = document.getElementById(`open-modal-${this.items}`) as HTMLIonModalElement;
-    modalTrigger?.click();
+  redirectToCreateState(){
+    this.router.navigate(['/create-state'])
   }
 
 }

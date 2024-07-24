@@ -1,21 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div>
+      <ion-title>
+        States
+      </ion-title>
+      <button class="btn-del">
+        <ion-icon (click)="redirectToCreateState()" name="add-outline"></ion-icon>
+      </button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
 <div class="container">
-  <div *ngFor="let item of items;">
-    <app-state id="open-modal-{{item.id}}"></app-state>
-  </div>
+  <app-state 
+    imageUser="https://unavatar.io/geddeu"
+    nameUser="Camila Cabello"
+    [items]="items"
+  ></app-state>
+  <app-state 
+    imageUser="https://unavatar.io/erikatourt"
+    nameUser="Erika Tourt"
+    [items]="items2"
+  ></app-state>
+  
+
+  <!-- <div *ngFor="let state of states">
+      <app-state 
+        [imageUser]="state.multimedia[0].url"
+        [nameUser]="state.user.username"
+        [items]="items"
+      ></app-state>
+  </div> -->
 </div>
 
 
 <ion-content>
-  <div *ngFor="let item of items;">
-    <ion-modal trigger="open-modal-{{item.id}}" [initialBreakpoint]="0.57" [breakpoints]="[0, 5]">
+    <ion-modal [initialBreakpoint]="0.57" [breakpoints]="[0, 5]">
       <ng-template>
-                <div class="modal-container">
-                    <app-carousel [items]="items"></app-carousel>                  
-                </div>
+        <ng-container *ngIf="items$ | async as items; else noItems">
+          <app-carousel [items]="items"></app-carousel>
+        </ng-container>
+        <ng-template #noItems>
+          <p>No items available</p>
+        </ng-template> 
       </ng-template>
     </ion-modal>
-  </div>
 </ion-content>
-
-//TENGO QUE CAMBIAR EL APP-STATE PARA QUE PASE EL NOMBRE DEL USER E ITERAR PARA TENER EL ITEMS LLENO DE INFORMACION
-

@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="header">
+        <button (click)="backView()" class="btn-header">Cancel</button>
+        <h1>Upload Image</h1>
+        <button (click)="onClick()" class="btn-header">Upload</button>
+    </div>
+
+    <div class="cont-image-picker">
+        <div (click)="openImagePicker()" class="image-picker">
+            <h2 *ngIf="!selectImage">Select a cool image</h2>
+            <img *ngIf="selectImage" [src]="srcImage" alt="Artist Image">
+        </div>
+    </div>
+</div>
