@@ -7,7 +7,7 @@ import { ProfilePage} from './profile.page';
 import { InputComponent } from 'src/app/components/input-component/input.component';
 import { MessageBarComponent } from 'src/app/components/message-bar/message-bar.component';
 import { ProfilePageRoutingModule } from './profile-routing.module';
-import { register } from 'swiper/element';
+import { register } from 'swiper/element/bundle';
 
 
 register();

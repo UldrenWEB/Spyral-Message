@@ -199,7 +199,6 @@ export class ProfilePage implements OnInit{
     // setTimeout(() => {
     //   this.router.navigate(['/login'])
     // }, 600)
-
   }
 
   async onSelectImage(){
