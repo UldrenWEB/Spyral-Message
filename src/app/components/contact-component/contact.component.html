@@ -1,7 +1,7 @@
 <div class="container">
     <div (click)="onClick()" class="subcontainer">
         <div class="cont-image">
-            <img src="https://unavatar.io/geddeu" alt="ImagenContacto">
+            <img [src]="image" alt="ImagenContacto">
         </div>
         <div class="cont-name">
             <h5>{{name}}</h5>
@@ -16,3 +16,5 @@
         </div>
     </div>
 </div>
+
+<app-message-bar [alertCode]="alertCode" [alertMessage]="alertMessage" [showAlert]="showAlert"></app-message-bar>

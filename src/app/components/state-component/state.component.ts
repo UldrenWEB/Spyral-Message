@@ -4,6 +4,7 @@ import { IonicModule } from "@ionic/angular";
 import { CarouselComponent } from "../carousel-component/carousel.component";
 import { ICarouselItem } from "../carousel-component/icarousel-item.metadata";
 import { StateService } from "src/app/service/StateService";
+import { StorageService } from "src/app/service/StorageService";
 
 @Component({
     selector: 'app-state',
@@ -16,15 +17,32 @@ import { StateService } from "src/app/service/StateService";
     ],
     standalone: true,
   })
-export class StateComponent {
+export class StateComponent implements OnInit {
     @Input() imageUser: string = 'https://unavatar.io/geddeu';
     @Input() nameUser: string = 'Uldren Gedde'
     @Input() userId: string = 'alsdkjfalkdj';
     @Input() items: ICarouselItem[] = [];
     
+    idUser: string = '';
+
     constructor(
       private stateService: StateService,
+      private storageService: StorageService
     ){}
+
+    isCurrentUser = () => {
+      return this.userId === this.idUser;
+    }
+
+    async ngOnInit(): Promise<void> {
+      try{
+        const response = await this.storageService.get('user');
+        const {user} = JSON.parse(response);
+        this.idUser = user.id;
+      }catch(error){
+        return;
+      }
+    }
 
 
     openModal(){

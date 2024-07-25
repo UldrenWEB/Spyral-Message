@@ -29,6 +29,10 @@ export class CallService {
                 url = `${url}${queryParams}`;
             }
 
+            if(id){
+                url = `${url}${id}`
+            }
+
             const fetchOptions: RequestInit = {
                 method: method.toUpperCase(),
                 headers: {
@@ -55,15 +59,15 @@ export class CallService {
         }
     };
 
-    callToFormData = async ({formData, endPoint}:{formData: FormData, endPoint: EndPoints}) : Promise<any> => {
+    callToFormData = async ({formData, endPoint, method = 'post'}:{formData: FormData, endPoint: EndPoints, method: 'post' | 'put'}) : Promise<any> => {
         this.loaderService.show();
         try{    
             const token = await this.storageService.get('token')
-            console.log(`Aqui el token ${token}`);
+            console.log(`${token}`)
             const url = `${base_url}${endpoints[endPoint]}`;
 
             const fetchOptions: RequestInit = {
-                method: 'POST',
+                method: method.toUpperCase(),
                 headers: {
                     ...(token ? {Authorization: `Bearer ${token}`} : {} )
                 },

@@ -47,6 +47,7 @@ export class LoginPage implements OnInit{
   showAlert: boolean = false;
   alertMessage: string = '';
   alertCode: number = 0;
+  private isShow: Boolean = false;
 
   //Regex
   regexEmail: string = '[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}';
@@ -68,7 +69,6 @@ export class LoginPage implements OnInit{
     this.isValidPassword = new RegExp(this.regexPassword).test(newValue)
   }
 
-  private isShow: Boolean = false;
 
   #showMessageBar = (message: string, code : 0 | 1 | 3 = 0) => {
     if(this.isShow) return;
@@ -87,28 +87,29 @@ export class LoginPage implements OnInit{
     if(!this.isValidEmail || !this.isValidPassword) return;
 
     //* Aqui se guarda el token del user y el rol del usuario
-    // const result = await this.callService.call({
-    //   method: 'post',
-    //   endPoint: 'login',
-    //   isToken: false,
-    //   body: {
-    //     email: this.emailValue,
-    //     password: this.passwordValue
-    //   }
-    // })
+    const result = await this.callService.call({
+      method: 'post',
+      endPoint: 'login',
+      isToken: false,
+      body: {
+        email: this.emailValue,
+        password: this.passwordValue
+      }
+    })
 
-    // this.#showMessageBar(result.message['description'], result.message['code'])
-    // if(result.message['code'] == 1 || result.message['code'] == 3 ){
-    //   return; 
-    // }
-    
-    this.storageService.set('token', 'tokenAQUI');
+    this.#showMessageBar(result.message['description'], result.message['code'])
+    if(result.message['code'] == 1 || result.message['code'] == 3 ){
+      return; 
+    }
+    const data = result['data'];
+    console.log(`Aqui data ${data}`)
+    this.storageService.set('token', data['token']);
     this.storageService.set('user', JSON.stringify({
       user: {
-        id: '28349287394823',
-        username: 'uldren',
-        email: 'gmail',
-        image: ''
+        id: data['_id'],
+        username: data['username'],
+        email: data['email'],
+        image: data['profile'].profile_picture
       },
     }));
     

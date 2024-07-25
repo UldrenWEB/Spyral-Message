@@ -122,6 +122,12 @@ export class RegisterPage implements OnInit{
       //   return;
       // }
 
+
+      this.registerService.setUser({
+        username: this.usernameValue,
+        password: this.passwordValue,
+        email: this.emailValue
+      })
       this.resetProps();
       //Aqui se debe usar el registerService para pasar a la otra vista
       setTimeout(() => {

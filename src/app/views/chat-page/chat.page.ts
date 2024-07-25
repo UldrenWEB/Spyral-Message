@@ -21,7 +21,7 @@ export class ChatPage implements OnInit {
     ){} 
 
     async ngOnInit(): Promise<void> {
-        this.messages = this.messageService.getMessages();
+        this.messages = this.messageService.getMessages() ?? [];
         this.nameMessage = this.messageService.getName();
         const result = await this.storageService.get('user');
         const {user} = JSON.parse(result);

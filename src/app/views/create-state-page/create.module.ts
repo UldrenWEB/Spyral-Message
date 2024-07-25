@@ -8,6 +8,7 @@ import { CreateStatePage } from './create.component';
 import { CreateStatePageRoutingModule } from './create-routing.module';
 import { ChatComponent } from 'src/app/components/chat-component/chat.component';
 import { InputComponent } from 'src/app/components/input-component/input.component';
+import { MessageBarComponent } from 'src/app/components/message-bar/message-bar.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { InputComponent } from 'src/app/components/input-component/input.compone
     FormsModule,
     CreateStatePageRoutingModule,
     ChatComponent,
-    InputComponent
+    InputComponent,
+    MessageBarComponent
   ],
   declarations: [CreateStatePage]
 })

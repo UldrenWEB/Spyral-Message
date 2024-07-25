@@ -1,7 +1,8 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
 import { ContactComponent } from "../contact-component/contact.component";
+import { CallService } from "src/app/service/CallService";
 
 @Component({
     selector: 'app-search',
@@ -11,20 +12,42 @@ import { ContactComponent } from "../contact-component/contact.component";
     standalone: true
 })
 export class SearchComponent implements OnInit {
+
+    constructor(
+        private callService: CallService,
+        private cdr: ChangeDetectorRef
+    ){}
+
     @Output() navigate = new EventEmitter<number>();
     searchTxt:string = '';
-    contacts = [
-        { id: '1', name: 'Uldren Gedde' },
-        { id: '2', name: 'Gabriela Gedde' },
-        { id: '3', name: 'Erika Tourt' }
-    ];
-    filteredContacts = [...this.contacts];
+    contacts: Array<{id: string, name: string, image: string}> = [];
+    filteredContacts: Array<{id: string, name: string, image: string}> = [];
 
     
-    //TODO: Aqui cargar todos sus amigos
-    ngOnInit(): void {
-        console.log('Aqui hara la solicitud para cargar contactos');
-    }
+    async ngOnInit(): Promise<void> {
+        const result = await this.callService.call({
+          method: 'get',
+          endPoint: 'allFriends',
+          body: {},
+          isToken: true
+        })
+        if(result['message'].code == 1 || result['message'].code == 3){
+          return;
+        }
+        const data = result['data'];
+    
+        const contacts = (data ?? []).map((friend: any) => {
+          return {
+            id: friend.id,
+            name: friend.username,
+            image: friend['profile'].profile_picture
+          }
+        });
+    
+        this.contacts = contacts;
+        this.filteredContacts = [...this.contacts];
+        this.cdr.detectChanges();
+      }
 
     onChange(event: Event) {
         const value = (event.target as HTMLInputElement).value.toLowerCase();

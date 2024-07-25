@@ -12,15 +12,15 @@
 </ion-header>
 
 <ion-content>
-  <app-chat name="Mi grupo"></app-chat>
-  <app-chat name="Mi grupo"></app-chat>
-  <app-chat name="Mi grupo"></app-chat>
-  <app-chat name="Mi grupo"></app-chat>
-  <app-chat name="Mi grupo"></app-chat>
-  <app-chat name="Mi grupo"></app-chat>
-  <app-chat name="Mi grupo"></app-chat>
-  <app-chat name="Mi grupo"></app-chat>
-  <app-chat name="Mi grupo"></app-chat>
-  <app-chat name="Mi grupo"></app-chat>
+  <div *ngIf="this.chatsArray.length >= 0">
+    <div *ngFor="let chat of chatsArray">
+      <app-chat 
+        [name]="chat[1].name"
+        [id]="chat[1].id"
+        [messages]="chat[1].messages[0]"
+        [users]="chat[1].users"
+      ></app-chat>
+    </div>
+  </div>
   <div style="height: 2em;"></div>
 </ion-content>

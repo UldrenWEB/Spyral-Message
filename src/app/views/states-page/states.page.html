@@ -12,25 +12,13 @@
 </ion-header>
 
 <div class="container">
-  <app-state 
-    imageUser="https://unavatar.io/geddeu"
-    nameUser="Camila Cabello"
-    [items]="items"
-  ></app-state>
-  <app-state 
-    imageUser="https://unavatar.io/erikatourt"
-    nameUser="Erika Tourt"
-    [items]="items2"
-  ></app-state>
-  
-
-  <!-- <div *ngFor="let state of states">
-      <app-state 
-        [imageUser]="state.multimedia[0].url"
-        [nameUser]="state.user.username"
-        [items]="items"
-      ></app-state>
-  </div> -->
+  <div *ngFor="let state of states">
+    <app-state 
+      [imageUser]="state.image"
+      [nameUser]="state.name"
+      [items]="state.items"
+    ></app-state>
+  </div>
 </div>
 
 
@@ -46,3 +34,5 @@
       </ng-template>
     </ion-modal>
 </ion-content>
+
+<app-message-bar [alertCode]="alertCode" [alertMessage]="alertMessage" [showAlert]="showAlert"></app-message-bar>

@@ -1,4 +1,14 @@
 {
     "login": "users/login",
-    "register": "users/register"
+    "register": "users/register",
+    "editProfile":"users/edit-profile",
+    "deleteAccount": "users/delete-account",
+    "allUsers": "users/users",
+    "allFriends": "friends/getAllFriends",
+    "createChat":"chats/create",
+    "allChats": "chats/my-chats",
+    "allStates": "estados/friends-states",
+    "uploadState":"estados/upload",
+    "sendRequests": "friends/searchAndAddFriend",
+    "existsChat": "chats/exists/"
 }

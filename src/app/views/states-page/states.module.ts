@@ -7,6 +7,7 @@ import { StatesPage } from './states.page';
 import { StatesPageRoutingModule } from './states-routing.module';
 import { StateComponent } from 'src/app/components/state-component/state.component';
 import { CarouselComponent } from 'src/app/components/carousel-component/carousel.component';
+import { MessageBarComponent } from 'src/app/components/message-bar/message-bar.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CarouselComponent } from 'src/app/components/carousel-component/carouse
     FormsModule,
     StatesPageRoutingModule,
     StateComponent,
-    CarouselComponent
+    CarouselComponent,
+    MessageBarComponent
   ],
   declarations: [StatesPage]
 })

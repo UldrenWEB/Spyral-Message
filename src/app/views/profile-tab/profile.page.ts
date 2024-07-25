@@ -23,33 +23,58 @@ export class ProfilePage implements OnInit{
       private callService: CallService
     ){}
 
+    public alertButtons = [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('Alert canceled');
+        },
+      },
+      {
+        text: 'OK',
+        role: 'confirm',
+        handler: async () => {
+          const result = await this.callService.call({
+            method:'delete',
+            isToken: true,
+            body: {},
+            endPoint: 'deleteAccount'
+          })
+          this.#showMessageBar(result.message['description'], result.message['code']);
+          if(result.message['code'] == 1 || result.message['code'] == 3){
+            return;
+          }
+        },
+      },
+    ];
+
     
     
     async ngOnInit() {
       this.setupKeyboardListener();
-      const swiper = new Swiper('.mySwiper', {
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-      });
+      const userString = await this.storageService.get('user');
+      const user = JSON.parse(userString);
+      this.user = user;
+
+      this.username = user['user'].username;
+      this.email = user['user'].email;
+      this.image = user['user'].image;
+
+      this.usernameValue = this.username;
+      this.emailValue = this.email;
     }
     
-    //Data que tiene el usuario actualmente
     user : any = {};
-    userRol: number = 0;
     username: string = '';
-    artistname: string = '';
     email: string = '';
-    imageArtist: SafeResourceUrl = '';
+    image: SafeResourceUrl = '';
+    imageBlob: Blob | null = null;
     
 
     usernameValue: string = '';
     passwordValue: string = '';
     emailValue: string = '';
-    artistnameValue: string = '';
-    selectedGenres: number[] = [];
-    genres: Array<string> = [];
     
     //MessageBar
     alertCode: number = 0;
@@ -62,11 +87,9 @@ export class ProfilePage implements OnInit{
     isValidEmail: boolean = false;
     isValidPassword: boolean = false;
     isValidUsername: boolean = false;
-    isValidArtistname: boolean = false;
     selectImage: boolean = false;
     
     //Regex
-    regexArtistname: string = '^[a-zA-Z]+(?: [a-zA-Z]+)+$';
     regexUsername: string = '.{5,}';
     regexEmail: string = '[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}';
     regexPassword: string = '.{8,}'
@@ -107,10 +130,6 @@ export class ProfilePage implements OnInit{
         this.passwordValue = newValue;
         this.isValidPassword = new RegExp(this.regexPassword).test(newValue)
     }
-    onValueChangeArtistname(newValue: string){
-        this.artistnameValue = newValue;
-        this.isValidArtistname = new RegExp(this.regexArtistname).test(newValue);
-    }
     //Fin de Funciones OnChange
 
     #showMessageBar = (message: string, code : 0 | 1 | 3 = 0) => {
@@ -137,50 +156,61 @@ export class ProfilePage implements OnInit{
         user : {
           username: this.usernameValue,
           email: this.emailValue,
+          image: this.image
         },
-        artist: {...this.user['artist']}
       }))
 
-      // const result = await this.callService.call({
-      //   method: 'put',
-      //   endPoint: 'editProfile',
-      //   body: {
-      //     username: this.usernameValue,
-      //     email: this.emailValue,
-      //     password: this.passwordValue
-      //   },
-      //   isToken: true
-      // })
+      const formData = new FormData();
+      formData.append('username', this.usernameValue);
+      formData.append('email', this.emailValue);
+      if(this.passwordValue.length >= 1){
+        formData.append('password', this.passwordValue);
+      }
+      
+      const result = await this.callService.callToFormData({
+        method: 'put',
+        endPoint: 'editProfile',
+        formData: formData
+      })
 
-      // this.#showMessageBar(result.message['description'], result.message['code']);
-      // if(result.message['code'] == 1 || result.message['code'] == 3){
-      //   return;
-      // }
-
-      setTimeout(() => {
-        this.router.navigate(['/tabs/home']);
-      }, 600)
-
+      this.#showMessageBar(result.message['description'], result.message['code']);
+      if(result.message['code'] == 1 || result.message['code'] == 3){
+        return;
+      }
       return;
     }
 
-    onSaveArtist = () => {
-      if(this.artistname === this.artistnameValue && !this.selectImage){
-        this.#showMessageBar('The artist has been edited correctly', 3);
+    onSaveImage = async () => {
+      if(!this.selectImage){
+        this.#showMessageBar('You must select a different photo', 3);
         return;
       }
 
-      this.storageService.set('user', JSON.stringify({
-        user: {...this.user['user']},
-        artist: {
-          name: this.artistnameValue,
-          image: this.imageArtist,
-          genres: this.selectedGenres
+      try{
+        const formData = new FormData();
+        formData.append('profile_picture', this.imageBlob || '');
+
+        const result = await this.callService.callToFormData({
+          endPoint: 'editProfile',
+          formData: formData,
+          method: 'put'
+        })
+
+        this.#showMessageBar(result['message'].description, result['message'].code);
+        if(result['message'].code == 1 || result['message'].code == 3){
+          return;
         }
-      }))
 
-      
-
+        this.storageService.set('user', JSON.stringify({
+          user: {
+            username: this.username,
+            email: this.email,
+            image: ''
+          }
+        }))
+      }catch(error){
+        this.#showMessageBar('An error occurred while saving the image', 1);
+      }
     }
 
   async onDelete(){
@@ -211,7 +241,8 @@ export class ProfilePage implements OnInit{
         });
   
         if (image && image.webPath) {
-          this.imageArtist = this.sanitizer.bypassSecurityTrustResourceUrl(image.webPath);
+          this.image = this.sanitizer.bypassSecurityTrustResourceUrl(image.webPath);
+          this.imageBlob = await this.convertBlobUrlToBlob(image.webPath);
           this.selectImage = true;
         } else {
           console.log('El resultado de las fotos es vacío');
@@ -219,6 +250,18 @@ export class ProfilePage implements OnInit{
       } catch (error) {
         console.error('Error seleccionando la imagen: ', error);
       }
+  }
+
+  async convertBlobUrlToBlob(blobUrl: string): Promise<Blob | null> {
+    try {
+      const response = await fetch(blobUrl);
+      if (!response.ok) throw new Error('Network response was not ok.');
+      const blob = await response.blob();
+      return blob;
+    } catch (error) {
+      console.error('Error fetching blob:', error);
+      return null;
+    }
   }
 
 

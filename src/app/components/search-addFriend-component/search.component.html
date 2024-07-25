@@ -12,6 +12,7 @@
             <app-contact
                 [name]="contact.name"
                 [id]="contact.id"
+                [image]="contact.image"
                 [isCheckbox]="true"
                 [selectedIds]="selectedContacts"
                 (contactSelected)="onContactSelected($event)">
@@ -19,3 +20,5 @@
         </div>
     </div>
 </div>
+
+<app-message-bar [alertCode]="alertCode" [alertMessage]="alertMessage" [showAlert]="showAlert"></app-message-bar>

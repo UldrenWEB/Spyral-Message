@@ -1,31 +1,76 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
 import { ContactComponent } from "../contact-component/contact.component";
+import { CallService } from "src/app/service/CallService";
+import { MessageBarComponent } from "../message-bar/message-bar.component";
 
 @Component({
     selector: 'app-friend',
     templateUrl: 'search.component.html',
     styleUrls: ['search.component.scss'],
-    imports: [IonicModule, CommonModule, ContactComponent],
+    imports: [IonicModule, CommonModule, ContactComponent, MessageBarComponent],
     standalone: true
 })
 export class SearchFriendComponent implements OnInit {
     @Output() navigate = new EventEmitter<number>();
     selectedContacts: string[] = [];
     searchTxt:string = '';
-    contacts = [
-        { id: '1', name: 'Uldren Gedde' },
-        { id: '2', name: 'Gabriela Gedde' },
-        { id: '3', name: 'Erika Tourt' }
-    ];
-    filteredContacts = [...this.contacts];
+    contacts : Array<{id: string, name: string, image:string}> = []
+    filteredContacts: Array<{id: string, name: string, image:string}> = [];
+
+    showAlert: boolean = false;
+    alertMessage: string = '';
+    alertCode: number = 0;
+    private isShow: Boolean = false;
+
+    constructor(
+        private callService: CallService,
+        private cdr: ChangeDetectorRef
+    ){}
 
 
-    //TODO: Aqui cargar todos los usuarios de la aplicacion
-    ngOnInit(): void {
-        console.log('Aqui hara la solicitud para cargar contactos');
+    async ngOnInit(): Promise<void> {
+        try{
+            const result = await this.callService.call({
+                method: 'get',
+                body: {},
+                isToken: true,
+                endPoint: 'allUsers'
+            })
+            if(result['message'].code == 1 || result['message'].code == 3){
+                return;
+            }
+            const data = result['data'];
+            const contacts = (data ?? []).map((user: any) => {
+                return {
+                    id: user.id,
+                    name: user.username,
+                    image: user['profile'].profile_picture
+                }
+            });
+
+            console.log(contacts)
+            this.contacts = contacts;
+            this.filteredContacts = [...this.contacts];
+            this.cdr.detectChanges();
+        }catch(error){
+            return;
+        }
     }
+
+    #showMessageBar = (message: string, code : 0 | 1 | 3 = 0) => {
+        if(this.isShow) return;
+        
+        this.isShow = true;
+        this.alertCode = code;
+        this.alertMessage = message;
+        this.showAlert = true;
+        setTimeout(() => {
+          this.showAlert = false;
+          this.isShow = false;
+        }, 3000)
+      }
 
 
     onContactSelected(contactId: string) {
@@ -46,8 +91,32 @@ export class SearchFriendComponent implements OnInit {
     }
 
     //! Aqui debera enviar la solicitud de amistad a todos esos usuario seleccionados
-    getSelectedContacts() {
-        console.log(this.selectedContacts);
+    getSelectedContacts = async () => {
+        console.log(this.selectedContacts)
+        if(this.selectedContacts.length <= 0)  
+            return this.#showMessageBar('You must select at least one user', 3);
+        try{
+            const result = await this.callService.call({
+                endPoint: 'sendRequests',
+                isToken: true,
+                body: {
+                    friendIds: this.selectedContacts
+                },
+                method: 'post'
+            })
+            console.log(result);
+
+            this.#showMessageBar(result['message'].description, result['message'].code);
+            if(result['message'].code == 1 || result['message'].code == 3){
+                return;
+            };
+
+            setTimeout(() => {
+                this.previusView();
+            }, 500)
+        }catch(error){
+            return this.#showMessageBar('There was an error sending friend requests',1)
+        }
     }
 
     previusView = () => {

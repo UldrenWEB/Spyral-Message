@@ -11,7 +11,9 @@
         <div *ngFor="let contact of filteredContacts">
             <app-contact
                 [name]="contact.name"
-                [id]="contact.id">
+                [id]="contact.id"
+                [image]="contact.image"
+                >
             </app-contact>
         </div>
     </div>

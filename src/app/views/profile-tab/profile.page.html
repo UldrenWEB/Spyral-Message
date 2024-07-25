@@ -4,7 +4,7 @@
       <ion-title>
         Edit your Account
       </ion-title>
-      <button (click)="onDelete()" class="btn-del">
+      <button id="present-alert" (click)="onDelete()" class="btn-del">
         <ion-icon name="trash-outline"></ion-icon>
       </button>
     </div>
@@ -69,10 +69,10 @@
     <div class="container-artist">
       <h2 class="txt-artist">Your are very important para nosotros...</h2>
       <div (click)="onSelectImage()" class="container-image">
-        <img [src]="imageArtist" alt="Artist image">
+        <img [src]="image" alt="Artist image">
       </div>
 
-      <div (click)="onSaveArtist()" class="cont-btn">
+      <div (click)="onSaveImage()" class="cont-btn">
         <button class="btn-edit">Save Image</button>
       </div>
       
@@ -80,5 +80,11 @@
   </swiper-slide>
 </swiper-container>
 </ion-content>
+
+<ion-alert
+  trigger="present-alert"
+  header="Surely you want to delete your account?"
+  [buttons]="alertButtons"
+></ion-alert>
 
 <app-message-bar [alertCode]="alertCode" [alertMessage]="alertMessage" [showAlert]="showAlert"></app-message-bar>

@@ -1,17 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { InputComponent } from '../input-component/input.component';
 import { ContactComponent } from '../contact-component/contact.component';
+import { CallService } from 'src/app/service/CallService';
+import { ChatService } from 'src/app/service/ChatService';
+import { MessageBarComponent } from '../message-bar/message-bar.component';
 
 @Component({
   selector: 'app-screen2',
   templateUrl: 'group.component.html',
   styleUrls: ['group.component.scss'],
-  imports: [IonicModule, CommonModule, InputComponent, ContactComponent],
+  imports: [IonicModule, CommonModule, InputComponent, ContactComponent, MessageBarComponent],
   standalone: true
 })
 export class GroupScreenComponent implements OnInit {
+
+  constructor(
+    private callService: CallService,
+    private cdr: ChangeDetectorRef,
+    private chatService: ChatService
+  ){}
+
+
   @Output() navigate = new EventEmitter<number>();
 
   regexGroupName: string = '.{5,}';
@@ -19,17 +30,52 @@ export class GroupScreenComponent implements OnInit {
   isValidGroupName: boolean = false;
   searchTxt:string = '';
   selectedContacts: string[] = [];
-  contacts = [
-      { id: '1', name: 'Uldren Gedde' },
-      { id: '2', name: 'Gabriela Gedde' },
-      { id: '3', name: 'Erika Tourt' }
-  ];
-  filteredContacts = [...this.contacts];
+  contacts: Array<{id: string, name: string, image: string}> = [];
+  filteredContacts: Array<{id: string, name: string, image: string}> = [];
 
+
+  //Prop alert
+  showAlert: boolean = false;
+  alertMessage: string = '';
+  alertCode: number = 0;
+  private isShow: Boolean = false;
   
-  //TODO: Aqui cargar todos los amigos del usuario
-  ngOnInit(): void {
-    console.log('Aqui hara la solicitud para cargar contactos');  
+  async ngOnInit(): Promise<void> {
+    const result = await this.callService.call({
+      method: 'get',
+      endPoint: 'allFriends',
+      body: {},
+      isToken: true
+    })
+    if(result['message'].code == 1 || result['message'].code == 3){
+      return;
+    }
+    const data = result['data'];
+
+    const contacts = (data ?? []).map((friend: any) => {
+      return {
+        id: friend.id,
+        name: friend.username,
+        image: friend['profile'].profile_picture
+      }
+    });
+
+    this.contacts = contacts;
+    this.filteredContacts = [...this.contacts];
+    this.cdr.detectChanges();
+  }
+
+  #showMessageBar = (message: string, code : 0 | 1 | 3 = 0) => {
+    if(this.isShow) return;
+    
+    this.isShow = true;
+    this.alertCode = code;
+    this.alertMessage = message;
+    this.showAlert = true;
+    setTimeout(() => {
+      this.showAlert = false;
+      this.isShow = false;
+    }, 3000)
   }
 
 
@@ -56,10 +102,38 @@ export class GroupScreenComponent implements OnInit {
   }
 
   //TODO: Aqui se creara el grupo con los contactos iniciales que sean seleccionados
-  onClick(){
+  async onClick(){
     if(!this.isValidGroupName) return;
 
-    console.log(this.selectedContacts);
+    try{
+      const result = await this.callService.call({
+        method: 'post',
+        body:{
+          name: this.groupName,
+          status: true,
+          idUser: this.selectedContacts
+        },
+        isToken: true,
+        endPoint: 'createChat'
+      })
+      console.log(result);
+      if(!result['chatId']){
+        return this.#showMessageBar('Hubo un error', 1);
+      }
+
+
+      this.chatService.addChat({
+        id: result['chatId'],
+        users: result['users'],
+        name: this.groupName,
+        messages: []
+      })
+      this.groupName = '';
+      return this.#showMessageBar('Group successfully created', 0);
+    }catch(error){
+      console.error(`QUe error es ${error}`)
+      return this.#showMessageBar('An error occurred and the group could not be created.', 1);;
+    }
 
   }
 

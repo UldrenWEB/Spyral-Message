@@ -65,7 +65,7 @@ export class MessageItemComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-    this.player.stop(); // Ensure the player is stopped on component destruction
+    this.player.stop(); 
   }
 
   togglePlayPause() {
