@@ -6,7 +6,6 @@ import { Keyboard } from "@capacitor/keyboard";
 import { Platform } from "@ionic/angular";
 import { CallService } from "src/app/service/CallService";
 import { StorageService } from "src/app/service/StorageService";
-import Swiper from "swiper";
 
 
 @Component({

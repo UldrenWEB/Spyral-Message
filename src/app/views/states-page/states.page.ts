@@ -61,7 +61,7 @@ export class StatesPage implements OnInit {
       const states = (data ?? []).map((state: any, index: number) => ({
         id: `${state.id}`,
         name: state.username,
-        image: state.profile?.profile_picture ?? 'https://unavatar.io/geddeu',
+        image: state.profile_picture ?? 'https://unavatar.io/geddeu',
         items: (state.states ?? []).map((st: any, i: number) => ({
           id: `theid${i}`,
           subtitle: st.description,

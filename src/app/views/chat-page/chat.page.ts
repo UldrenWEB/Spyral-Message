@@ -34,7 +34,6 @@ export class ChatPage implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.messageSubscription = this.messageService.chatId$.subscribe((id) => {
-        console.log(`Este es el nuevo id de chat -> ${id}`);
         this.chatId = id;
     })
 
@@ -84,9 +83,6 @@ export class ChatPage implements OnInit, OnDestroy {
   handleSendMessage(event: { message: string, image: Blob | null, audio: Blob | null }) {
     const { newMessage } = this.createMessage(event.message, event.image, event.audio);
     if (this.chatId) {
-      console.log('Entro aqui')
-      // this.chatService.addMessageToChat(this.chatId, newMessage);
-      // this.messageService.addMessage(newMessage);
       this.socketService.sendMessage({...newMessage, chatId: this.chatId, userId: this.user.id});
     }
   }

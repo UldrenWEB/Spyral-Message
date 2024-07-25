@@ -121,7 +121,6 @@ export class GroupScreenComponent implements OnInit {
         isToken: true,
         endPoint: 'createChat'
       })
-      console.log(result);
       if(!result['chatId']){
         return this.#showMessageBar('Hubo un error', 1);
       }
@@ -129,7 +128,7 @@ export class GroupScreenComponent implements OnInit {
 
       this.chatService.addChat({
         id: result['chatId'],
-        users: result['users'],
+        users: (result['users'][0].id ?? []).map((e: any) =>  e.username),
         name: this.groupName,
         messages: []
       })

@@ -69,7 +69,6 @@ export class HomePage implements OnInit {
 
         this.socketService.onMessage('receiveMessage').subscribe((data: any) => {
 
-          console.log(`PROBANDO LA VIDA -> ${data['sender'].id}`)
           const chatId = data['idChat'][0];
           const user = {
               id: data['sender'].id[0] as string,
@@ -80,14 +79,16 @@ export class HomePage implements OnInit {
             _id: data['idMessage'] as string,
             user,
             description: data['description'] || '' as string,
-            multimedia: data['multimedia'] as {type: string, url: string}
+            multimedia: data['multimedia'] as {type: string, url: string},
+            createdAt: data['createdAt']
           })
 
           this.messageService.addMessage({
             _id: data['idMessage'] as string,
             user,
             description: data['description'] || '' as string,
-            multimedia: data['multimedia'] as {type: string, url: string}
+            multimedia: data['multimedia'] as {type: string, url: string},
+            createdAt: data['createdAt']
           })
 
           

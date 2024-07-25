@@ -13,8 +13,8 @@ export class RequestPage implements OnInit {
     @Output() navigate = new EventEmitter<number>();
     selectedContacts: string[] = [];
     searchTxt:string = '';
-    contacts: Array<{id: string, name: string}> = [];
-    filteredContacts = [...this.contacts];
+    contacts: Array<{id: string, name: string, image: string}> = [];
+    filteredContacts: Array<{id: string, name: string, image: string}> = [];
       //Prop alert
     showAlert: boolean = false;
     alertMessage: string = '';
@@ -53,7 +53,8 @@ export class RequestPage implements OnInit {
             const data = result['data'];
             const requests = (data ?? []).map((request: any) => ({
                 id: request['sender'].id,
-                name: request['sender'].username
+                name: request['sender'].username,
+                image: request['sender'].profile['profile_picture']
             }))
             this.contacts = requests;
             this.filteredContacts = this.contacts;
