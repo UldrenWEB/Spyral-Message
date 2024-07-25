@@ -4,10 +4,11 @@
         <ion-icon name="close-circle-outline" (click)="close()"></ion-icon>
     </div>
     <div class="input-container">
-        <ion-icon (click)="onRecording()" name="mic-outline"></ion-icon>
+        <ion-icon *ngIf="!recording" (click)="onMicPress()" name="mic-outline"></ion-icon>
+        <div class="cont-duration" *ngIf="recording"><span>{{durationDisplay}}</span></div>
         <input type="text" (input)="onMessageInput($event)" placeholder="Type a message..." [value]="message">
-        <ion-icon name="camera-outline" (click)="onSelectImage()"></ion-icon>
-        <!-- <input type="file" accept="image/*" (change)="onSelectImage()" #fileInput hidden> -->
+        <ion-icon  *ngIf="!recording" name="camera-outline" (click)="onSelectImage()"></ion-icon>
+        <ion-icon *ngIf="recording" (click)="onMicRelease()" name="stop-outline"></ion-icon>
         <ion-icon name="send-outline" (click)="onSend()"></ion-icon>
     </div>
 </div>

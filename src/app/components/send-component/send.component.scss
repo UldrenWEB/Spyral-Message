@@ -47,13 +47,26 @@
     }
 
     ion-icon {
-        font-size: 24px;
+        font-size: 30px;
         color: $color-primary;
-        cursor: pointer;
         margin-right: 10px;
     }
 
     ion-button {
         margin-left: 10px;
     }
+}
+
+.cont-duration{
+    font-size: 20px;
+    font-family: $font-primary;
+    width: 2.5em;
+}
+
+span{
+    color: $color-primary;
+}
+
+.custom-alert{
+    --ion-color-primary: #FF00B8;
 }

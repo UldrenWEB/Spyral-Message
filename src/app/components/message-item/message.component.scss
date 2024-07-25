@@ -54,3 +54,58 @@
     margin-top: 5px;
     text-align: right;
 }
+
+.container-duration{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 3em;
+    margin-bottom: 1em;
+    gap: 20px;
+  }
+  
+  ion-icon {
+    font-size: 40px;
+  }
+  
+  button {
+    background: none;
+    border: none;
+  }
+  
+  button:active ion-icon {
+    opacity: 0.6;
+  }
+
+  .progress-container {
+    width: 70%;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    progress {
+      width: 100%;
+      height: 0.8em;
+
+      &::-webkit-progress-value {
+        background-color: #ff69b4; 
+        border-radius: 1em;
+      }
+  
+      &::-moz-progress-bar {
+        background-color: #ff69b4;
+        border-radius: 1em;
+      }
+  
+      &::-ms-fill {
+        border-radius: 11em;
+        background-color: #ff69b4;
+      }
+    }
+  }

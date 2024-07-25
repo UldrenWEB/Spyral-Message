@@ -18,7 +18,7 @@ export class ChatPage implements OnInit {
         private messageService: MessageService,
         private storageService: StorageService,
         private router: Router
-    ){}
+    ){} 
 
     async ngOnInit(): Promise<void> {
         this.messages = this.messageService.getMessages();
@@ -34,12 +34,12 @@ export class ChatPage implements OnInit {
 
 
     //! Aqui se enviaria en formdata ese mensaje y al socket
-    handleSendMessage(event: { message: string, image: Blob | null }) {
-        const {newMessage} = this.createMessage(event.message, event.image);
+    handleSendMessage(event: { message: string, image: Blob | null, audio: Blob | null }) {
+        const {newMessage} = this.createMessage(event.message, event.image, event.audio);
         this.messages = [...this.messages, newMessage];
     }
 
-    createMessage(message: string, image: Blob | null) {
+    createMessage(message: string, image: Blob | null, audio: Blob | null) {
         const user = this.user;
         let newMessage: any = {
             _id: 'IdDelMensaje',
@@ -56,6 +56,14 @@ export class ChatPage implements OnInit {
                 type: 'image',
                 url: url
             };
+        }
+
+        if(audio){
+            const url = URL.createObjectURL(audio);
+            newMessage.multimedia = {
+                type: 'audio',
+                url: url
+            }
         }
     
         return {newMessage};
