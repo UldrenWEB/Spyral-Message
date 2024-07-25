@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
 
     constructor(
         private callService: CallService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
     ){}
 
     @Output() navigate = new EventEmitter<number>();
@@ -58,7 +58,7 @@ export class SearchComponent implements OnInit {
     }
 
     previusView = () => {
-        this.navigate.emit(1);
+      this.navigate.emit(1);
     }
 
 }

@@ -1,27 +1,34 @@
-import { Injectable } from "@angular/core";
-
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class MessageService {
-    private messages: Array<any> = [];
-    private name: string | null = null;
+  private messagesSubject = new BehaviorSubject<Array<any>>([]);
+  messages$ = this.messagesSubject.asObservable();
 
+  private chatIdSubject = new BehaviorSubject<string | null>(null);
+    chatId$ = this.chatIdSubject.asObservable();
 
-    setMessage = (messages: Array<any>) => {
-        this.messages = messages
+  private messages: Array<any> = [];
+
+  setMessages(messages: Array<any>) {
+    this.messages = messages;
+    this.messagesSubject.next(this.messages);
+  }
+
+  addMessage(newMessage: any) {
+    this.messages.push(newMessage);
+    this.messagesSubject.next(this.messages);
+  }
+
+    setChatId = (chatId: string) => {
+        this.chatIdSubject.next(chatId);
     }
 
-    setName = (name: string | null) => {
-        this.name = name;
+    getChatId = () => {
+        return this.chatIdSubject.getValue();
     }
 
-    getName = () => {
-        return this.name;
-    }
-
-    getMessages = () =>{
-        return this.messages;
-    }
 }

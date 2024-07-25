@@ -8,7 +8,7 @@
             <ion-icon name="settings-outline"></ion-icon>
         </div>
     </div>
-    <div class="cont-messages">
+    <div class="cont-messages" #messageContainer>
         <div class="cont-items" *ngFor="let message of messages">
             <app-message-item
                 [id]="message._id"

@@ -15,7 +15,7 @@ import { StateService } from 'src/app/service/StateService';
 export class StatesPage implements OnInit {
   items: ICarouselItem[] = CAROUSEL_DATA_ITEMS;
   items2: ICarouselItem[] = bebe;
-  states: Array<{name: string, image: string, items: Array<ICarouselItem>}> = [];
+  states: Array<{name: string, image: string, items: Array<ICarouselItem>, id:string}> = [];
   items$: Observable<ICarouselItem[]> = new Observable<ICarouselItem[]>();
   
 
@@ -46,7 +46,6 @@ export class StatesPage implements OnInit {
   }
 
   async loadData(){
-    console.log('Prueba')
     try{
       const result = await this.callService.call({
         method: 'get',
@@ -59,9 +58,8 @@ export class StatesPage implements OnInit {
         return;
       }
       const data = result['data'].states;
-  
       const states = (data ?? []).map((state: any, index: number) => ({
-        id: `holabeb${index}`,
+        id: `${state.id}`,
         name: state.username,
         image: state.profile?.profile_picture ?? 'https://unavatar.io/geddeu',
         items: (state.states ?? []).map((st: any, i: number) => ({

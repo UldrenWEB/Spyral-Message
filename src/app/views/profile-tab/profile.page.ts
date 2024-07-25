@@ -45,6 +45,8 @@ export class ProfilePage implements OnInit{
           if(result.message['code'] == 1 || result.message['code'] == 3){
             return;
           }
+
+          this.router.navigate(['/login'])
         },
       },
     ];

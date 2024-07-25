@@ -38,6 +38,7 @@ export class StateComponent implements OnInit {
       try{
         const response = await this.storageService.get('user');
         const {user} = JSON.parse(response);
+        console.log(`id de la prop -> ${this.userId} : id del usuario actuaL ${this.idUser}`)
         this.idUser = user.id;
       }catch(error){
         return;

@@ -1,10 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { IonicModule } from "@ionic/angular";
 import { CallService } from "src/app/service/CallService";
 import { MessageBarComponent } from "../message-bar/message-bar.component";
 import { ChatService } from "src/app/service/ChatService";
+import { StorageService } from "src/app/service/StorageService";
 
 @Component({
     selector: 'app-contact',
@@ -13,7 +14,7 @@ import { ChatService } from "src/app/service/ChatService";
     imports: [IonicModule, CommonModule, MessageBarComponent],
     standalone: true
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
     @Input() name: string = '';
     @Input() id: string = '';
     @Input() isCheckbox: boolean = false;
@@ -25,16 +26,28 @@ export class ContactComponent {
     alertMessage: string = '';
     alertCode: number = 0;
     private isShow: Boolean = false;
+    private userId: string = '';
 
     get selected(): boolean {
         return this.selectedIds.includes(this.id);
     }
 
     constructor(
-        private router: Router,
         private callService: CallService,
-        private chatService: ChatService
+        private chatService: ChatService,
+        private storageService: StorageService
     ){}
+
+    async ngOnInit(): Promise<void>{
+        try{
+            const response = await this.storageService.get('user');
+            const {user} = JSON.parse(response);
+            this.userId = user.id;
+            return;
+        }catch(error){
+            return;
+        }
+    }
 
     #showMessageBar = (message: string, code : 0 | 1 | 3 = 0) => {
         if(this.isShow) return;
@@ -72,19 +85,18 @@ export class ContactComponent {
                     method: 'post',
                     isToken: true,
                     body: {
-                        idUser: [this.id],
+                        idUser: [this.id, this.userId],
                         status: false
                     },
                     endPoint: 'createChat'
                 })
-                console.log(result);
                 if(!result['chatId']){
                     return this.#showMessageBar('Could not create new chat', 1);
                 }
-
+                
                 this.chatService.addChat({
                     id: result['chatId'],
-                    users: result['users'],
+                    users: (result['users'][0].id ?? []).map((e: any) => e.username),
                     name: '',
                     messages: []
                 })

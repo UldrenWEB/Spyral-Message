@@ -102,7 +102,6 @@ export class LoginPage implements OnInit{
       return; 
     }
     const data = result['data'];
-    console.log(`Aqui data ${data}`)
     this.storageService.set('token', data['token']);
     this.storageService.set('user', JSON.stringify({
       user: {

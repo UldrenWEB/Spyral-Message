@@ -10,5 +10,8 @@
     "allStates": "estados/friends-states",
     "uploadState":"estados/upload",
     "sendRequests": "friends/searchAndAddFriend",
-    "existsChat": "chats/exists/"
+    "existsChat": "chats/exists/",
+    "allRequest": "friends/getFriendRequests",
+    "acceptRequests": "friends/respondToFriendRequest",
+    "sendMessage": "messages/multimedia"
 }

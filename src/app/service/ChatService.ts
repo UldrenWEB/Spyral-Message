@@ -5,14 +5,14 @@ interface Chat {
   id: string;
   name: string;
   users: string[];
-  messages: string[];
+  messages: any[];
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  private chats = new BehaviorSubject<Map<string, Chat> >(new Map());
+  private chats = new BehaviorSubject<Map<string, Chat>>(new Map());
   chats$ = this.chats.asObservable();
 
   getChats(): Map<string, Chat> {
@@ -25,7 +25,6 @@ export class ChatService {
 
   addChat(chat: Chat): void {
     const currentChats = this.getChats();
-    console.log(`La instancia es ${currentChats instanceof Map}`)
     if (currentChats instanceof Map) {
       currentChats.set(chat.id, chat);
       this.setChats(currentChats);
@@ -38,7 +37,7 @@ export class ChatService {
     return this.getChats().get(chatId);
   }
 
-  addMessageToChat(chatId: string, message: string): void {
+  addMessageToChat(chatId: string, message: any): void {
     const currentChats = this.getChats();
     const chat = currentChats.get(chatId);
     if (chat) {

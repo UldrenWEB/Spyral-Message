@@ -11,7 +11,10 @@ type EndPoints = 'login' |
     'allStates' |
     'uploadState' | 
     'sendRequests' | 
-    'existsChat'
+    'existsChat' |
+    'allRequest' |
+    'acceptRequests' | 
+    'sendMessage'
 
 export {
     RequestMethod,

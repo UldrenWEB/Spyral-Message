@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { ModalContentComponent } from 'src/app/components/modal-component/modal.component';
 import { CallService } from 'src/app/service/CallService';
 import { ChatService } from 'src/app/service/ChatService';
+import { MessageService } from 'src/app/service/MessageService';
+import { SocketService } from 'src/app/service/SocketService';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,9 @@ export class HomePage implements OnInit {
   constructor(
     private modalController: ModalController,
     private callService: CallService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private socketService:SocketService,
+    private messageService: MessageService
   ) {}
 
   chats: Map<string, any> = new Map<string, any>();
@@ -22,7 +26,6 @@ export class HomePage implements OnInit {
 
   async ngOnInit(): Promise<void> {
       try {
-
         this.chatService.chats$.subscribe((chats) => {
           this.chats = chats;
           this.chatsArray = Array.from(this.chats);
@@ -41,7 +44,7 @@ export class HomePage implements OnInit {
 
         const data = result['data'];
         const chats = (data ?? []).map((chat: any, index: any) =>({
-          id: chat._id || `chatId${index}`,
+          id: chat.id || `chatId${index}`,
           users: (chat.users ?? []).map((user: any) => user._id.username || ''),
           name: chat.name,
           messages: [
@@ -63,6 +66,34 @@ export class HomePage implements OnInit {
         );
 
         this.chatService.setChats(chatsMap);
+
+        this.socketService.onMessage('receiveMessage').subscribe((data: any) => {
+
+          console.log(`PROBANDO LA VIDA -> ${data['sender'].id}`)
+          const chatId = data['idChat'][0];
+          const user = {
+              id: data['sender'].id[0] as string,
+              name: data['sender'].username as string
+            }
+
+          this.chatService.addMessageToChat(chatId, {
+            _id: data['idMessage'] as string,
+            user,
+            description: data['description'] || '' as string,
+            multimedia: data['multimedia'] as {type: string, url: string}
+          })
+
+          this.messageService.addMessage({
+            _id: data['idMessage'] as string,
+            user,
+            description: data['description'] || '' as string,
+            multimedia: data['multimedia'] as {type: string, url: string}
+          })
+
+          
+
+        })
+
       } catch (error) {
         return;
       }

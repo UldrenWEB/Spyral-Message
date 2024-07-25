@@ -6,6 +6,7 @@ import { ContactComponent } from '../contact-component/contact.component';
 import { CallService } from 'src/app/service/CallService';
 import { ChatService } from 'src/app/service/ChatService';
 import { MessageBarComponent } from '../message-bar/message-bar.component';
+import { StorageService } from 'src/app/service/StorageService';
 
 @Component({
   selector: 'app-screen2',
@@ -19,7 +20,8 @@ export class GroupScreenComponent implements OnInit {
   constructor(
     private callService: CallService,
     private cdr: ChangeDetectorRef,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private storageService: StorageService
   ){}
 
 
@@ -32,6 +34,7 @@ export class GroupScreenComponent implements OnInit {
   selectedContacts: string[] = [];
   contacts: Array<{id: string, name: string, image: string}> = [];
   filteredContacts: Array<{id: string, name: string, image: string}> = [];
+  userId: string = '';
 
 
   //Prop alert
@@ -41,6 +44,9 @@ export class GroupScreenComponent implements OnInit {
   private isShow: Boolean = false;
   
   async ngOnInit(): Promise<void> {
+    const response = await this.storageService.get('user');
+    const {user} = JSON.parse(response);
+    this.userId = user.id;
     const result = await this.callService.call({
       method: 'get',
       endPoint: 'allFriends',
@@ -101,7 +107,6 @@ export class GroupScreenComponent implements OnInit {
     }
   }
 
-  //TODO: Aqui se creara el grupo con los contactos iniciales que sean seleccionados
   async onClick(){
     if(!this.isValidGroupName) return;
 
@@ -111,7 +116,7 @@ export class GroupScreenComponent implements OnInit {
         body:{
           name: this.groupName,
           status: true,
-          idUser: this.selectedContacts
+          idUser: [...this.selectedContacts, this.userId]
         },
         isToken: true,
         endPoint: 'createChat'
