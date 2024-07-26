@@ -125,12 +125,11 @@ export class GroupScreenComponent implements OnInit {
         return this.#showMessageBar('Hubo un error', 1);
       }
 
-
       this.chatService.addChat({
         id: result['chatId'],
         users: (result['users'][0].id ?? []).map((e: any) =>  e.username),
         name: this.groupName,
-        messages: []
+        messages: [[]]
       })
       this.groupName = '';
       return this.#showMessageBar('Group successfully created', 0);

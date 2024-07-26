@@ -23,6 +23,23 @@ export class ChatPage implements OnInit, OnDestroy {
   private messageSubscription: Subscription | null = null;
   private idSubscription: Subscription | null = null;
 
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: async () => {
+        console.log('Dio ok')
+      },
+    },
+  ];
+
   constructor(
     private chatService: ChatService,
     private storageService: StorageService,

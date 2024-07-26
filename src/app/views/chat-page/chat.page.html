@@ -4,7 +4,7 @@
             <ion-icon (click)="backPage()" name="arrow-back-outline"></ion-icon>
         </div>
         <h1>{{nameMessage ? nameMessage : 'Direct Message'}}</h1>
-        <div>
+        <div id="present-alert">
             <ion-icon name="settings-outline"></ion-icon>
         </div>
     </div>
@@ -21,3 +21,9 @@
     </div>
     <app-send (sendMessage)="handleSendMessage($event)"></app-send>
 </div>
+
+<ion-alert
+  trigger="present-alert"
+  header="Available soon?"
+  [buttons]="alertButtons"
+></ion-alert>

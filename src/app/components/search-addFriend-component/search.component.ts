@@ -50,7 +50,6 @@ export class SearchFriendComponent implements OnInit {
                 }
             });
 
-            console.log(contacts)
             this.contacts = contacts;
             this.filteredContacts = [...this.contacts];
             this.cdr.detectChanges();
@@ -104,7 +103,6 @@ export class SearchFriendComponent implements OnInit {
                 },
                 method: 'post'
             })
-            console.log(result);
 
             this.#showMessageBar(result['message'].description, result['message'].code);
             if(result['message'].code == 1 || result['message'].code == 3){

@@ -98,7 +98,7 @@ export class ContactComponent implements OnInit {
                     id: result['chatId'],
                     users: (result['users'][0].id ?? []).map((e: any) => e.username),
                     name: '',
-                    messages: []
+                    messages: [[]]
                 })
 
                 this.#showMessageBar('The chat was successfully created', 0);
